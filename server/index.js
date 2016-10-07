@@ -90,19 +90,19 @@ export const createServer = (config) => {
             }
 
             trigger('fetch', components, locals)
-        .then(() => {
-            const initialState = store.getState()
-            const InitialView = (
-                <Provider store={store}>
-                    <RouterContext {...renderProps} />
-                </Provider>
-            )
+                .then(() => {
+                    const initialState = store.getState()
+                    const InitialView = (
+                        <Provider store={store}>
+                            <RouterContext {...renderProps} />
+                        </Provider>
+                    )
 
-            const html = ReactDOM.renderToString(InitialView)
-            const head = Helm.rewind()
-            res.status(200).send(`<!DOCTYPE html>
+                    const html = ReactDOM.renderToString(InitialView)
+                    const head = Helm.rewind()
+                    res.status(200).send(`<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charSet="utf-8">
     <meta httpEquiv="X-UA-Compatible" content="IE=edge">
     ${head.title.toString()}
@@ -110,16 +110,16 @@ export const createServer = (config) => {
     <link rel="shortcut icon" href="/favicon.ico">
     ${head.meta.toString()}
     ${head.link.toString()}
-  </head>
-  <body>
+</head>
+<body>
     <div id="root">${html}</div>
     <script>window.INITIAL_STATE = ${JSON.stringify(initialState)};</script>
     <script src="${__PROD__ ? assets.vendor.js : '/vendor.js'}"></script>
     <script async src="${__PROD__ ? assets.main.js : '/main.js'}" ></script>
-  </body>
+</body>
 </html>
 `)
-        }).catch(e => console.log(e))
+                }).catch(e => console.log(e))
         })
     })
 
